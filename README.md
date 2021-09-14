@@ -1,2 +1,2 @@
 # counterjs
-A counter made in JavaScript vanilla 
+A countdown timer made in JavaScript vanilla 
