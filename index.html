@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <title>Contador Dinâmico</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- Exemplo 1: Contador com separadores padrão (espaço) -->
+    <div data-counterjs="21/05/2025 12:00:00"
+    data-counterjs-hide-hour="true"
+         data-counterjs-hide-minute="true"
+         data-counterjs-hide-second="true"
+    ></div>
+    
+    <!-- Exemplo 2: Contador com separadores personalizados -->
+    <div data-counterjs="31/05/2026 12:30:45"
+         data-counterjs-date-separator=" / "
+         data-counterjs-time-separator=":"
+         data-counterjs-datetime-separator=" - ">
+    </div>
+    
+    <!-- Exemplo 3: Apenas data com separador personalizado -->
+    <div data-counterjs="31/12/2025 23:59:59"
+         data-counterjs-date-separator=" - "
+         data-counterjs-hide-hour="true"
+         data-counterjs-hide-minute="true"
+         data-counterjs-hide-second="true">
+    </div>
+    
+    <!-- Exemplo 4: Apenas hora com separador personalizado -->
+    <div data-counterjs="21/05/2025 12:30:00"
+         data-counterjs-time-separator=":"
+         data-counterjs-hide-year="true"
+         data-counterjs-hide-month="true"
+         data-counterjs-hide-day="true">
+    </div>
+    <script src="counter.js"></script>
+  </body>
+</html>

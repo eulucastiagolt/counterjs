@@ -1,0 +1,22 @@
+{
+  "name": "counterjs",
+  "version": "2.0.0",
+  "description": "Um contador regressivo simples e personalizável",
+  "main": "counter.js",
+  "scripts": {
+    "build": "terser counter.js -o counter.min.js --compress --mangle",
+    "watch": "onchange 'counter.js' -- npm run build"
+  },
+  "keywords": [
+    "countdown",
+    "timer",
+    "javascript",
+    "counter"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "onchange": "^7.1.0",
+    "terser": "^5.19.2"
+  }
+}
