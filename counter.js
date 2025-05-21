@@ -1,7 +1,6 @@
-window.addEventListener('DOMContentLoaded', () => {
-    const counters = document.querySelectorAll('[data-counterjs]');
-    
-    counters.forEach(counter => {
+const counters = document.querySelectorAll('[data-counterjs]');
+
+counters.forEach(counter => {
         const targetDateStr = counter.getAttribute('data-counterjs');
         const hideWhenZero = counter.getAttribute('data-counterjs-hidden') === 'true';
         const hideYear = counter.getAttribute('data-counterjs-hide-year') === 'true';
@@ -222,4 +221,3 @@ window.addEventListener('DOMContentLoaded', () => {
         updateCounter();
         interval = setInterval(updateCounter, 1000);
     });
-});
