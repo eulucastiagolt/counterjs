@@ -1,0 +1,114 @@
+---
+title: Getting Started
+description: Learn how to create your first countdown timer with CounterJS.
+---
+
+# Getting Started
+
+## Your First Countdown
+
+Let's create a simple countdown timer that shows the time remaining until New Year's Eve 2026.
+
+### Basic HTML
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Countdown Timer</title>
+</head>
+<body>
+    <h1>Countdown to New Year 2026</h1>
+    <div data-counterjs data-counterjs-date="31/12/2025 23:59:59">
+        Loading countdown...
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const counter = new CounterJS();
+            counter.init();
+        });
+    </script>
+</body>
+</html>
+```
+
+### Code Explanation
+
+1. We added a `<div>` element with these attributes:
+   - `data-counterjs`: Indicates this is a counter element
+   - `data-counterjs-date`: Sets the target date and time in DD/MM/YYYY HH:MM:SS format
+
+2. We included the CounterJS script via CDN
+
+3. We initialize the counter when the DOM is fully loaded
+
+## Customizing the Display
+
+You can customize which time units are displayed and their labels:
+
+```html
+<div 
+    data-counterjs
+    data-counterjs-date="31/12/2025 23:59:59"
+    data-counterjs-hide-year="false"
+    data-counterjs-hide-month="false"
+    data-counterjs-hide-day="false"
+    data-counterjs-hide-hour="false"
+    data-counterjs-hide-minute="false"
+    data-counterjs-hide-second="false"
+    data-counterjs-date-separator=" / "
+    data-counterjs-time-separator=" : "
+    data-counterjs-datetime-separator=" - "
+>
+    Loading countdown...
+</div>
+```
+
+## Configuration Options
+
+| Attribute | Description | Default |
+|----------|-------------|---------|
+| `data-counterjs` | Initializes the counter on the element | - |
+| `data-counterjs-date` | Target date in DD/MM/YYYY [HH:MM:SS] format | Required |
+| `data-counterjs-hide-year` | Hide years | `false` |
+| `data-counterjs-hide-month` | Hide months | `false` |
+| `data-counterjs-hide-day` | Hide days | `false` |
+| `data-counterjs-hide-hour` | Hide hours | `false` |
+| `data-counterjs-hide-minute` | Hide minutes | `false` |
+| `data-counterjs-hide-second` | Hide seconds | `false` |
+| `data-counterjs-date-separator` | Separator between date elements | ` / ` |
+| `data-counterjs-time-separator` | Separator between time elements | ` : ` |
+| `data-counterjs-datetime-separator` | Separator between date and time | ` - ` |
+
+## Programmatic Initialization
+
+If you prefer, you can initialize the counter via JavaScript:
+
+```html
+<div id="my-counter">
+    Loading countdown...
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create element programmatically
+        const div = document.createElement('div');
+        div.setAttribute('data-counterjs', '');
+        div.setAttribute('data-counterjs-date', '31/12/2025 23:59:59');
+        
+        // Add to DOM
+        document.getElementById('my-counter').appendChild(div);
+        
+        // Initialize counter
+        const counter = new CounterJS();
+        counter.init();
+    });
+</script>
+```
+
+## Next Steps
+
+- Learn more about the [API Reference](/counterjs/guides/api/)
+- Check out [Practical Examples](/counterjs/guides/example/)

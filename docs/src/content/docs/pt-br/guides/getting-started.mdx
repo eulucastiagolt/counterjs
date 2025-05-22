@@ -1,0 +1,114 @@
+---
+title: Primeiros Passos
+description: Aprenda a criar seu primeiro contador regressivo com o CounterJS.
+---
+
+# Primeiros Passos
+
+## Seu Primeiro Contador
+
+Vamos criar um contador regressivo simples que mostra o tempo restante até o Ano Novo de 2026.
+
+### HTML Básico
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meu Contador Regressivo</title>
+</head>
+<body>
+    <h1>Contagem Regressiva para o Ano Novo 2026</h1>
+    <div data-counterjs data-counterjs-date="31/12/2025 23:59:59">
+        Carregando contador...
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const counter = new CounterJS();
+            counter.init();
+        });
+    </script>
+</body>
+</html>
+```
+
+### Explicação do Código
+
+1. Adicionamos um elemento `<div>` com os atributos:
+   - `data-counterjs`: Indica que este é um elemento de contador
+   - `data-counterjs-date`: Define a data e hora alvo no formato DD/MM/AAAA HH:MM:SS
+
+2. Incluímos o script do CounterJS via CDN
+
+3. Inicializamos o contador quando o DOM estiver totalmente carregado
+
+## Personalizando a Exibição
+
+Você pode personalizar quais unidades de tempo são exibidas e seus respectivos rótulos:
+
+```html
+<div 
+    data-counterjs
+    data-counterjs-date="31/12/2025 23:59:59"
+    data-counterjs-hide-year="false"
+    data-counterjs-hide-month="false"
+    data-counterjs-hide-day="false"
+    data-counterjs-hide-hour="false"
+    data-counterjs-hide-minute="false"
+    data-counterjs-hide-second="false"
+    data-counterjs-date-separator=" / "
+    data-counterjs-time-separator=" : "
+    data-counterjs-datetime-separator=" - "
+>
+    Carregando contador...
+</div>
+```
+
+## Opções de Configuração
+
+| Atributo | Descrição | Padrão |
+|----------|-----------|---------|
+| `data-counterjs` | Inicializa o contador no elemento | - |
+| `data-counterjs-date` | Data alvo no formato DD/MM/AAAA [HH:MM:SS] | Obrigatório |
+| `data-counterjs-hide-year` | Oculta os anos | `false` |
+| `data-counterjs-hide-month` | Oculta os meses | `false` |
+| `data-counterjs-hide-day` | Oculta os dias | `false` |
+| `data-counterjs-hide-hour` | Oculta as horas | `false` |
+| `data-counterjs-hide-minute` | Oculta os minutos | `false` |
+| `data-counterjs-hide-second` | Oculta os segundos | `false` |
+| `data-counterjs-date-separator` | Separador entre elementos de data | ` / ` |
+| `data-counterjs-time-separator` | Separador entre elementos de tempo | ` : ` |
+| `data-counterjs-datetime-separator` | Separador entre data e hora | ` - ` |
+
+## Inicialização Programática
+
+Se preferir, você pode inicializar o contador via JavaScript:
+
+```html
+<div id="meu-contador">
+    Carregando contador...
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Criar elemento programaticamente
+        const div = document.createElement('div');
+        div.setAttribute('data-counterjs', '');
+        div.setAttribute('data-counterjs-date', '31/12/2025 23:59:59');
+        
+        // Adicionar ao DOM
+        document.getElementById('meu-contador').appendChild(div);
+        
+        // Inicializar o contador
+        const counter = new CounterJS();
+        counter.init();
+    });
+</script>
+```
+
+## Próximos Passos
+
+- Aprenda mais sobre a [Referência da API](/pt-br/guides/api/)
+- Veja [Exemplos Práticos](/pt-br/guides/example/)

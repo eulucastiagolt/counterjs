@@ -1,7 +1,6 @@
 # CounterJS
 
 [![GitHub license](https://img.shields.io/github/license/eulucastiagolt/counterjs)](https://github.com/eulucastiagolt/counterjs/blob/main/LICENSE)
-[![npm version](https://img.shields.io/npm/v/counterjs)](https://www.npmjs.com/package/counterjs)
 
 A simple, lightweight and customizable countdown timer for your web projects.
 
@@ -23,11 +22,6 @@ A simple, lightweight and customizable countdown timer for your web projects.
 <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
 ```
 
-### Via npm
-
-```bash
-npm install counterjs
-```
 
 ## Usage
 

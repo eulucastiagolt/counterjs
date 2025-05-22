@@ -7,7 +7,8 @@
   "scripts": {
     "build": "terser counter.js -o counter.min.js --compress --mangle",
     "watch": "onchange 'counter.js' -- pnpm build",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "deploy": "cd docs && pnpm astro build && cd ../ && gh-pages -d docs/dist -r https://github.com/eulucastiagolt/counterjs.git"
   },
   "packageManager": "pnpm@8.15.4",
   "engines": {
@@ -35,6 +36,7 @@
     "url": "git+https://github.com/eulucastiagolt/counterjs.git"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "onchange": "^7.1.0",
     "terser": "^5.19.2"
   }

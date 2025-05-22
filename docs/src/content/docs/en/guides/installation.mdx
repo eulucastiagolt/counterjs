@@ -1,0 +1,58 @@
+---
+title: Installation
+description: Learn how to install and set up CounterJS in your project.
+---
+
+# Installation
+
+## Prerequisites
+
+- Modern web browser (or Internet Explorer 11+)
+- No additional dependencies required
+
+## Installation Methods
+
+### Via CDN (Recommended method)
+
+Add the following code to your HTML to start using CounterJS right away:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
+```
+
+## Basic Usage
+
+1. Add the HTML element with the required attributes:
+
+```html
+<div data-counterjs data-counterjs-date="12/31/2025 23:59:59">
+  Loading countdown...
+</div>
+```
+
+2. Initialize CounterJS:
+
+```javascript
+document.addEventListener('DOMContentLoaded', function() {
+  const counter = new CounterJS();
+  counter.init();
+});
+```
+
+## Verifying Installation
+
+If you're using the CDN method, CounterJS will be available globally as `window.CounterJS`. You can verify the installation by adding the following to your HTML:
+
+```html
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    if (window.CounterJS) {
+      console.log('CounterJS is loaded successfully!');
+    } else {
+      console.error('CounterJS failed to load');
+    }
+  });
+</script>
+```
+
+If you see the success message in the console and the counter displays on your page, the installation was successful!

@@ -1,0 +1,137 @@
+---
+title: Referência da API
+description: Documentação completa da API do CounterJS.
+---
+
+# Referência da API
+
+## CounterJS
+
+A classe principal do CounterJS que cria e gerencia contadores regressivos.
+
+## Instalação
+
+### Via CDN
+
+Adicione o seguinte script ao seu HTML para usar o CounterJS:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
+```
+
+## Uso Básico
+
+### HTML
+
+```html
+<div data-counterjs data-counterjs-date="31/12/2025 23:59:59">
+  Carregando...
+</div>
+```
+
+### JavaScript
+
+```javascript
+// Inicializa todos os contadores na página
+const counter = new CounterJS();
+counter.init();
+
+// Ou direcionar elementos específicos
+const specificCounter = new CounterJS('.meu-contador');
+specificCounter.init();
+```
+
+## Construtor
+
+```javascript
+new CounterJS(seletor)
+```
+
+### Parâmetros
+
+- `seletor` (String, opcional): Seletor CSS para elementos específicos. Se não fornecido, procurará por elementos com o atributo `data-counterjs`.
+
+## Métodos
+
+### init()
+
+Inicializa todos os contadores.
+
+```javascript
+const counter = new CounterJS();
+counter.init();
+```
+
+### destroy()
+
+Destrói todos os contadores e remove os listeners de eventos.
+
+```javascript
+counter.destroy();
+```
+
+## Atributos HTML
+
+### Obrigatórios
+
+| Atributo | Descrição | Exemplo |
+|-----------|-------------|---------|
+| `data-counterjs` | Inicializa o contador no elemento | `<div data-counterjs>` |
+| `data-counterjs-date` | Data alvo no formato DD/MM/AAAA, com hora opcional em HH:MM:SS | `31/12/2025 23:59:59` |
+
+### Opcionais
+
+| Atributo | Descrição | Padrão |
+|-----------|-------------|---------|
+| `data-counterjs-hide-year` | Oculta o ano da exibição | `false` |
+| `data-counterjs-hide-month` | Oculta o mês da exibição | `false` |
+| `data-counterjs-hide-day` | Oculta o dia da exibição | `false` |
+| `data-counterjs-hide-hour` | Oculta a hora da exibição | `false` |
+| `data-counterjs-hide-minute` | Oculta os minutos da exibição | `false` |
+| `data-counterjs-hide-second` | Oculta os segundos da exibição | `false` |
+| `data-counterjs-date-separator` | Separador entre elementos de data | ` / ` |
+| `data-counterjs-time-separator` | Separador entre elementos de tempo | ` : ` |
+| `data-counterjs-datetime-separator` | Separador entre data e hora | ` - ` |
+
+## Exemplo Avançado
+
+```html
+<div 
+  data-counterjs
+  data-counterjs-date="31/12/2025 23:59:59"
+  data-counterjs-hide-year="false"
+  data-counterjs-hide-month="false"
+  data-counterjs-hide-day="false"
+  data-counterjs-hide-hour="false"
+  data-counterjs-hide-minute="false"
+  data-counterjs-hide-second="false"
+  data-counterjs-date-separator=" / "
+  data-counterjs-time-separator=" : "
+  data-counterjs-datetime-separator=" - "
+>
+  Carregando contador...
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const counter = new CounterJS();
+    counter.init();
+    
+    // Você também pode direcionar elementos específicos
+    const specificCounter = new CounterJS('.meu-contador-especial');
+    specificCounter.init();
+  });
+</script>
+```
+
+## Suporte a Navegadores
+
+- Chrome (última versão)
+- Firefox (última versão)
+- Safari (última versão)
+- Edge (última versão)
+- IE 11+
+
+## Licença
+
+MIT © [Lucas Tiago](https://github.com/eulucastiagolt)
