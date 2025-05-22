@@ -1,76 +1,102 @@
-const counters = document.querySelectorAll('[data-counterjs]');
+class CounterJS {
+    constructor(selector) {
+        this.selector = selector || null;
+        this.counters = [];
+    }
 
-counters.forEach(counter => {
-    const targetDateStr = counter.getAttribute('data-counterjs');
-    const hideWhenZero = counter.getAttribute('data-counterjs-hidden') === 'true';
-    const hideYear = counter.getAttribute('data-counterjs-hide-year') === 'true';
-    const hideMonth = counter.getAttribute('data-counterjs-hide-month') === 'true';
-    const hideDay = counter.getAttribute('data-counterjs-hide-day') === 'true';
-    const hideHour = counter.getAttribute('data-counterjs-hide-hour') === 'true';
-    const hideMinute = counter.getAttribute('data-counterjs-hide-minute') === 'true';
-    const hideSecond = counter.getAttribute('data-counterjs-hide-second') === 'true';
-    const dateSeparator = counter.getAttribute('data-counterjs-date-separator') || ' '; // Separador entre unidades de data
-    const timeSeparator = counter.getAttribute('data-counterjs-time-separator') || ' '; // Separador entre unidades de tempo
-    const dateTimeSeparator = counter.getAttribute('data-counterjs-datetime-separator') || ' '; // Separador entre data e hora
-    
-    let DD, MM, YY, HH = 0, MI = 0, SS = 0;
-    let interval;
-
-    try {
-        // Verifica se tem espaço para separar data e hora
-        const hasSpace = targetDateStr.includes(' ');
-        let dateStr = targetDateStr;
+    init() {
+        const elements = this.selector 
+            ? document.querySelectorAll(this.selector)
+            : document.querySelectorAll('[data-counterjs]');
         
-        if (hasSpace) {
-            // Se tiver espaço, separa data e hora
-            [dateStr, timeStr] = targetDateStr.split(' ');
-            // Se tiver tempo, processa
+        elements.forEach(element => this.setupCounter(element));
+        return this;
+    }
+
+    setupCounter(counter) {
+        const targetDateStr = counter.getAttribute('data-counterjs-date');
+        if (!targetDateStr) {
+            console.warn('Atributo data-counterjs-date não encontrado no elemento:', counter);
+            return;
+        }
+
+        const counterData = {
+            element: counter,
+            hideWhenZero: counter.getAttribute('data-counterjs-hidden') === 'true',
+            hideYear: counter.getAttribute('data-counterjs-hide-year') === 'true',
+            hideMonth: counter.getAttribute('data-counterjs-hide-month') === 'true',
+            hideDay: counter.getAttribute('data-counterjs-hide-day') === 'true',
+            hideHour: counter.getAttribute('data-counterjs-hide-hour') === 'true',
+            hideMinute: counter.getAttribute('data-counterjs-hide-minute') === 'true',
+            hideSecond: counter.getAttribute('data-counterjs-hide-second') === 'true',
+            dateSeparator: counter.getAttribute('data-counterjs-date-separator') || ' ',
+            timeSeparator: counter.getAttribute('data-counterjs-time-separator') || ':',
+            dateTimeSeparator: counter.getAttribute('data-counterjs-datetime-separator') || ' ',
+            interval: null
+        };
+
+        this.counters.push(counterData);
+        this.startCounter(counterData);
+    }
+
+    startCounter(counterData) {
+        const { element: counter } = counterData;
+        const targetDateStr = counter.getAttribute('data-counterjs-date');
+        
+        let DD, MM, YY, HH = 0, MI = 0, SS = 0;
+
+        try {
+            // Separa data e hora
+            const [dateStr, timeStr] = targetDateStr.split(' ');
+            
+            // Processa a data (formato DD/MM/YYYY)
+            const [day, month, year] = dateStr.split('/').map(Number);
+            
+            // Cria o objeto Date
+            const date = new Date(year, month - 1, day);
+            
+            if (isNaN(date.getTime())) {
+                throw new Error('Data inválida');
+            }
+            
+            // Define dia, mês e ano
+            DD = date.getDate();
+            MM = date.getMonth() + 1;
+            YY = date.getFullYear();
+            
+            // Processa a hora se existir
             if (timeStr) {
                 [HH, MI, SS] = timeStr.split(':').map(Number);
             }
-        } else if (targetDateStr.includes(':')) {
-            // Se não tem espaço mas tem :, assume que é apenas hora
-            [HH, MI, SS] = targetDateStr.split(':').map(Number);
+            
+            // Garante que o ano tem 4 dígitos (para datas com 2 dígitos)
+            if (YY < 100) YY += 2000;
+            
+        } catch (error) {
+            console.error('Erro ao processar data/hora:', error);
+            counter.textContent = 'Erro na data';
+            return;
         }
-        
-        // Se tem barras, processa a data
-        if (dateStr.includes('/')) {
-            [DD, MM, YY] = dateStr.split('/').map(Number);
-        } else {
-            // Se não tem data, usa a data atual
-            const now = new Date();
-            DD = now.getDate();
-            MM = now.getMonth() + 1;
-            YY = now.getFullYear();
-        }
-        
-        // Garante que o ano tem 4 dígitos
-        if (YY < 100) YY += 2000;
-        
-    } catch (error) {
-        console.error('Erro ao processar data/hora:', error);
-        counter.textContent = 'Erro na data';
-        return;
-    }
 
-        function updateCounter() {
+        const updateCounter = () => {
             const current_time = new Date();
             const future_time = new Date(YY, MM - 1, DD, HH, MI, SS);
             const ss = Math.floor((future_time - current_time) / 1000);
 
             if (ss <= 0) {
-                clearInterval(interval);
-                if (hideWhenZero) {
+                clearInterval(counterData.interval);
+                if (counterData.hideWhenZero) {
                     counter.style.display = 'none';
                     return;
                 }
-                // Mostra zeros formatados respeitando as flags
-                let zeroHtml = '<span class="counter-container">';
+
+                // Lógica para quando o contador termina
+                let zeroHTML = '<span class="counter-container">';
                 let hasContent = false;
-                
-                // Adiciona unidades de data
-                if (!hideYear) {
-                    zeroHtml += `
+
+                // Adiciona as unidades de data
+                if (!counterData.hideYear) {
+                    zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
                             <span class="counter-label">Anos</span>
@@ -78,11 +104,9 @@ counters.forEach(counter => {
                     hasContent = true;
                 }
                 
-                if (!hideMonth) {
-                    if (hasContent) {
-                        zeroHtml += `<span class="counter-separator">${dateSeparator}</span>`;
-                    }
-                    zeroHtml += `
+                if (!counterData.hideMonth) {
+                    if (hasContent) zeroHTML += `<span class="counter-separator">${counterData.dateSeparator}</span>`;
+                    zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
                             <span class="counter-label">Meses</span>
@@ -90,27 +114,26 @@ counters.forEach(counter => {
                     hasContent = true;
                 }
                 
-                if (!hideDay) {
-                    if (hasContent) {
-                        zeroHtml += `<span class="counter-separator">${dateSeparator}</span>`;
-                    }
-                    zeroHtml += `
+                if (!counterData.hideDay) {
+                    if (hasContent) zeroHTML += `<span class="counter-separator">${counterData.dateSeparator}</span>`;
+                    zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
                             <span class="counter-label">Dias</span>
                         </span>`;
                     hasContent = true;
                 }
-                
-                // Adiciona separador entre data e hora, se necessário
-                if (hasContent && (!hideHour || !hideMinute || !hideSecond)) {
-                    zeroHtml += `<span class="counter-separator">${dateTimeSeparator}</span>`;
-                    hasContent = true;
+
+
+                // Adiciona separador entre data e hora se necessário
+                if (hasContent && (!counterData.hideHour || !counterData.hideMinute || !counterData.hideSecond)) {
+                    zeroHTML += `<span class="counter-separator">${counterData.dateTimeSeparator}</span>`;
                 }
-                
-                // Adiciona unidades de tempo
-                if (!hideHour) {
-                    zeroHtml += `
+
+
+                // Adiciona as unidades de tempo
+                if (!counterData.hideHour) {
+                    zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
                             <span class="counter-label">Horas</span>
@@ -118,11 +141,9 @@ counters.forEach(counter => {
                     hasContent = true;
                 }
                 
-                if (!hideMinute) {
-                    if (hasContent) {
-                        zeroHtml += `<span class="counter-separator">${timeSeparator}</span>`;
-                    }
-                    zeroHtml += `
+                if (!counterData.hideMinute) {
+                    if (hasContent) zeroHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
+                    zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
                             <span class="counter-label">Minutos</span>
@@ -130,130 +151,143 @@ counters.forEach(counter => {
                     hasContent = true;
                 }
                 
-                if (!hideSecond) {
-                    if (hasContent) {
-                        zeroHtml += `<span class="counter-separator">${timeSeparator}</span>`;
-                    }
-                    zeroHtml += `
+                if (!counterData.hideSecond) {
+                    if (hasContent) zeroHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
+                    zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
                             <span class="counter-label">Segundos</span>
                         </span>`;
                 }
                 
-                zeroHtml += '</span>';
-                counter.innerHTML = zeroHtml;
+                zeroHTML += '</span>';
+                counter.innerHTML = zeroHTML;
                 return;
             }
 
-            // Calcular os valores totais
-            const totalSeconds = ss;
-            const totalMinutes = Math.floor(totalSeconds / 60);
-            const totalHours = Math.floor(totalMinutes / 60);
-            const totalDays = Math.floor(totalHours / 24);
-            const totalMonths = Math.floor(totalDays / 30);
-            const totalYears = Math.floor(totalMonths / 12);
 
-            // Calcular os valores restantes
-            const remainingSS = totalSeconds % 60;
-            const remainingMinutes = totalMinutes % 60;
-            const remainingHours = totalHours % 24;
-            const remainingDays = totalDays % 30;
-            const remainingMonths = totalMonths % 12;
+            // Cálculo dos valores totais
+            const totalSegundos = ss;
+            const totalMinutos = Math.floor(totalSegundos / 60);
+            const totalHoras = Math.floor(totalMinutos / 60);
+            const totalDias = Math.floor(totalHoras / 24);
+            const totalMeses = Math.floor(totalDias / 30);
+            const totalAnos = Math.floor(totalMeses / 12);
 
-            // Criar o HTML dinâmico com base nos valores
+            // Cálculo dos valores restantes
+            const segundosRestantes = totalSegundos % 60;
+            const minutosRestantes = totalMinutos % 60;
+            const horasRestantes = totalHoras % 24;
+            const diasRestantes = totalDias % 30;
+            const mesesRestantes = totalMeses % 12;
+
+            // Cria o HTML do contador
             let counterHTML = '<span class="counter-container">';
             let hasContent = false;
-            
-            let hasTimeContent = false;
-            
-            function addSeparator() {
-                if (hasContent) {
-                    let sep = '';
-                    if (hasTimeContent) {
-                        sep = timeSeparator;
-                    } else if (hideYear && hideMonth && hideDay) {
-                        sep = timeSeparator;
-                    } else if (hideHour && hideMinute && hideSecond) {
-                        sep = dateSeparator;
-                    } else if (hasTimeContent === false && (hideHour || hideMinute || hideSecond)) {
-                        sep = dateTimeSeparator;
-                    } else {
-                        sep = hasTimeContent ? timeSeparator : dateSeparator;
-                    }
-                    
-                    if (sep) {
-                        counterHTML += `<span class="counter-separator">${sep}</span>`;
-                    }
+
+            // Função auxiliar para adicionar separadores
+            const addSeparator = (context = 'date') => {
+                if (!hasContent) return;
+                
+                if (context === 'date') {
+                    counterHTML += `<span class="counter-separator">${counterData.dateSeparator}</span>`;
+                } 
+                else if (context === 'time') {
+                    counterHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
                 }
-            }
-            
-            if (!hideYear && totalYears > 0) {
-                addSeparator();
+                else if (context === 'datetime') {
+                    counterHTML += `<span class="counter-separator">${counterData.dateTimeSeparator}</span>`;
+                }
+            };
+
+            // Adiciona as unidades de data
+            if (!counterData.hideYear && totalAnos > 0) {
                 counterHTML += `
                     <span class="counter-group">
-                        <span class="counter-value">${totalYears.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${totalYears > 1 ? 'Anos' : 'Ano'}</span>
+                        <span class="counter-value">${totalAnos.toString().padStart(2, '0')}</span>
+                        <span class="counter-label">${totalAnos === 1 ? 'Ano' : 'Anos'}</span>
                     </span>`;
                 hasContent = true;
             }
 
-            if (!hideMonth && (remainingMonths > 0 || hasContent)) {
-                addSeparator();
+            if (!counterData.hideMonth && (mesesRestantes > 0 || hasContent)) {
+                if (hasContent) addSeparator('date');
                 counterHTML += `
                     <span class="counter-group">
-                        <span class="counter-value">${remainingMonths.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${remainingMonths > 1 ? 'Meses' : 'Mês'}</span>
+                        <span class="counter-value">${mesesRestantes.toString().padStart(2, '0')}</span>
+                        <span class="counter-label">${mesesRestantes === 1 ? 'Mês' : 'Meses'}</span>
                     </span>`;
                 hasContent = true;
             }
 
-            if (!hideDay && (remainingDays > 0 || hasContent)) {
-                addSeparator();
+            if (!counterData.hideDay && (diasRestantes > 0 || hasContent)) {
+                if (hasContent) addSeparator('date');
                 counterHTML += `
                     <span class="counter-group">
-                        <span class="counter-value">${remainingDays.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${remainingDays > 1 ? 'Dias' : 'Dia'}</span>
+                        <span class="counter-value">${diasRestantes.toString().padStart(2, '0')}</span>
+                        <span class="counter-label">${diasRestantes === 1 ? 'Dia' : 'Dias'}</span>
                     </span>`;
                 hasContent = true;
             }
 
-            if (!hideHour) {
-                hasTimeContent = true;
-                addSeparator();
+            // Não precisamos mais adicionar o dateTimeSeparator aqui, pois ele é tratado na função addSeparator
+
+
+            // Adiciona separador entre data e hora se houver itens de data e tempo
+            if (hasContent && (!counterData.hideHour || !counterData.hideMinute || !counterData.hideSecond)) {
+                addSeparator('datetime');
+            }
+
+            // Adiciona as unidades de tempo
+            if (!counterData.hideHour) {
                 counterHTML += `
                     <span class="counter-group">
-                        <span class="counter-value">${remainingHours.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${remainingHours > 1 ? 'Horas' : 'Hora'}</span>
+                        <span class="counter-value">${horasRestantes.toString().padStart(2, '0')}</span>
+                        <span class="counter-label">${horasRestantes === 1 ? 'Hora' : 'Horas'}</span>
                     </span>`;
                 hasContent = true;
             }
 
-            if (!hideMinute && (remainingMinutes > 0 || hasContent)) {
-                hasTimeContent = true;
-                addSeparator();
+            if (!counterData.hideMinute) {
+                if (hasContent) addSeparator('time');
                 counterHTML += `
                     <span class="counter-group">
-                        <span class="counter-value">${remainingMinutes.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${remainingMinutes > 1 ? 'Minutos' : 'Minuto'}</span>
+                        <span class="counter-value">${minutosRestantes.toString().padStart(2, '0')}</span>
+                        <span class="counter-label">Min</span>
                     </span>`;
                 hasContent = true;
             }
 
-            if (!hideSecond) {
-                hasTimeContent = true;
-                addSeparator();
+            if (!counterData.hideSecond) {
+                if (hasContent) addSeparator('time');
                 counterHTML += `
                     <span class="counter-group">
-                        <span class="counter-value">${remainingSS.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${remainingSS > 1 ? 'Segundos' : 'Segundo'}</span>
+                        <span class="counter-value">${segundosRestantes.toString().padStart(2, '0')}</span>
+                        <span class="counter-label">Seg</span>
                     </span>`;
             }
+
 
             counterHTML += '</span>';
             counter.innerHTML = counterHTML;
-        }
-
+        };
+        
+        // Inicia o contador
         updateCounter();
-        interval = setInterval(updateCounter, 1000);
-    });
+        counterData.interval = setInterval(updateCounter, 1000);
+    }
+
+
+    destroy() {
+        this.counters.forEach(counter => {
+            if (counter.interval) {
+                clearInterval(counter.interval);
+            }
+        });
+        this.counters = [];
+    }
+}
+
+// Exporta para navegadores e módulos
+if (typeof window !== 'undefined') window.CounterJS = CounterJS;
+if (typeof module !== 'undefined' && module.exports) module.exports = CounterJS;

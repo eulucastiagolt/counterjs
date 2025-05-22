@@ -10,12 +10,19 @@
     <div class="topbar">
         <div class="topbar-content">
             <h1>Oferta termina em: </h1>
-            <div class="countdown" 
-                 data-counterjs="31/12/2025" 
+            <div class="countdown"
+                 data-counterjs
+                 data-counterjs-date="31/12/2025 23:59:59"
+                 data-counterjs-hidden="false"
                  data-counterjs-hide-year="false"
                  data-counterjs-hide-month="false"
                  data-counterjs-hide-day="false"
-                 data-counterjs-time-separator=":">
+                 data-counterjs-hide-hour="false"
+                 data-counterjs-hide-minute="false"
+                 data-counterjs-hide-second="false"
+                 data-counterjs-date-separator=" / "
+                 data-counterjs-time-separator=" : "
+                 data-counterjs-datetime-separator=" - ">
                 Carregando...
             </div>
             <a href="#oferta" class="offer-button">
@@ -31,6 +38,13 @@
     </div>
 
     <!-- Scripts no final do body para melhor performance -->
-    <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs/counter.js"></script>
+    <script src="../../counter.min.js"></script>
+    <script>
+        // Inicializa o contador quando o DOM estiver pronto
+        document.addEventListener('DOMContentLoaded', function() {
+            const counter = new CounterJS('');
+            counter.init();
+        });
+    </script>
 </body>
 </html>

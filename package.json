@@ -1,12 +1,21 @@
 {
   "name": "counterjs",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "description": "Um contador regressivo simples e personalizável",
   "main": "counter.js",
   "scripts": {
     "build": "terser counter.js -o counter.min.js --compress --mangle",
-    "watch": "onchange 'counter.js' -- npm run build"
+    "watch": "onchange 'counter.js' -- pnpm build",
+    "prepublishOnly": "pnpm build"
   },
+  "packageManager": "pnpm@8.15.4",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "counter.js",
+    "counter.min.js"
+  ],
   "keywords": [
     "countdown",
     "timer",
