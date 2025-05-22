@@ -1,8 +1,9 @@
 {
   "name": "counterjs",
-  "version": "3.0.0",
-  "description": "Um contador regressivo simples e personalizável",
+  "version": "3.0.1",
+  "description": "A simple and customizable countdown timer",
   "main": "counter.js",
+  "type": "module",
   "scripts": {
     "build": "terser counter.js -o counter.min.js --compress --mangle",
     "watch": "onchange 'counter.js' -- pnpm build",
@@ -20,10 +21,19 @@
     "countdown",
     "timer",
     "javascript",
-    "counter"
+    "counter",
+    "vanilla-js"
   ],
-  "author": "",
+  "author": "Lucas Tiago <lucastiagolt@proton.me>",
   "license": "MIT",
+  "homepage": "https://github.com/eulucastiagolt/counterjs#readme",
+  "bugs": {
+    "url": "https://github.com/eulucastiagolt/counterjs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eulucastiagolt/counterjs.git"
+  },
   "devDependencies": {
     "onchange": "^7.1.0",
     "terser": "^5.19.2"

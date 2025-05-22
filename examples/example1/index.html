@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador Regressivo</title>
+    <title>CounterJS - Example</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="topbar">
         <div class="topbar-content">
-            <h1>Oferta termina em: </h1>
+            <h1>Offer ends in: </h1>
             <div class="countdown"
                  data-counterjs
                  data-counterjs-date="31/12/2025 23:59:59"
@@ -23,24 +23,24 @@
                  data-counterjs-date-separator=" / "
                  data-counterjs-time-separator=" : "
                  data-counterjs-datetime-separator=" - ">
-                Carregando...
+                Loading...
             </div>
-            <a href="#oferta" class="offer-button">
-                Aproveitar Oferta
+            <a href="#offer" class="offer-button">
+                Claim Offer
                 <span class="offer-arrow">→</span>
             </a>
         </div>
     </div>
 
     <div class="content">
-        <h2>Conteúdo da Página</h2>
-        <p>Este é um exemplo de página com um contador regressivo na barra superior.</p>
+        <h2>Page Content</h2>
+        <p>This is an example page with a countdown timer in the top bar.</p>
     </div>
 
     <!-- Scripts no final do body para melhor performance -->
-    <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.0/counter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
     <script>
-        // Inicializa o contador quando o DOM estiver pronto
+        // Initialize counter when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             const counter = new CounterJS('');
             counter.init();

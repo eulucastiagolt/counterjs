@@ -1,9 +1,18 @@
+/**
+ * CounterJS - A simple and customizable countdown timer
+ * @version 3.0.1
+ * @license MIT
+ */
 class CounterJS {
     constructor(selector) {
         this.selector = selector || null;
         this.counters = [];
     }
 
+    /**
+     * Initialize all counters
+     * @returns {CounterJS} Instance of CounterJS
+     */
     init() {
         const elements = this.selector 
             ? document.querySelectorAll(this.selector)
@@ -13,10 +22,14 @@ class CounterJS {
         return this;
     }
 
+    /**
+     * Set up a single counter
+     * @param {HTMLElement} counter - The counter element
+     */
     setupCounter(counter) {
         const targetDateStr = counter.getAttribute('data-counterjs-date');
         if (!targetDateStr) {
-            console.warn('Atributo data-counterjs-date não encontrado no elemento:', counter);
+            console.warn('data-counterjs-date attribute not found in element:', counter);
             return;
         }
 
@@ -49,14 +62,14 @@ class CounterJS {
             // Separa data e hora
             const [dateStr, timeStr] = targetDateStr.split(' ');
             
-            // Processa a data (formato DD/MM/YYYY)
+            // Process date (format: DD/MM/YYYY)
             const [day, month, year] = dateStr.split('/').map(Number);
             
-            // Cria o objeto Date
+            // Create Date object
             const date = new Date(year, month - 1, day);
             
             if (isNaN(date.getTime())) {
-                throw new Error('Data inválida');
+                throw new Error('Invalid date format. Use DD/MM/YYYY');
             }
             
             // Define dia, mês e ano
@@ -94,12 +107,12 @@ class CounterJS {
                 let zeroHTML = '<span class="counter-container">';
                 let hasContent = false;
 
-                // Adiciona as unidades de data
+                // Add date units
                 if (!counterData.hideYear) {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">Anos</span>
+                            <span class="counter-label">Years</span>
                         </span>`;
                     hasContent = true;
                 }
@@ -109,7 +122,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">Meses</span>
+                            <span class="counter-label">Months</span>
                         </span>`;
                     hasContent = true;
                 }
@@ -119,24 +132,24 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">Dias</span>
+                            <span class="counter-label">Days</span>
                         </span>`;
                     hasContent = true;
                 }
 
 
-                // Adiciona separador entre data e hora se necessário
+                // Add separator between date and time if necessary
                 if (hasContent && (!counterData.hideHour || !counterData.hideMinute || !counterData.hideSecond)) {
                     zeroHTML += `<span class="counter-separator">${counterData.dateTimeSeparator}</span>`;
                 }
 
 
-                // Adiciona as unidades de tempo
+                // Add time units
                 if (!counterData.hideHour) {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">Horas</span>
+                            <span class="counter-label">Hours</span>
                         </span>`;
                     hasContent = true;
                 }
@@ -146,7 +159,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">Minutos</span>
+                            <span class="counter-label">Minutes</span>
                         </span>`;
                     hasContent = true;
                 }
@@ -156,7 +169,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">Segundos</span>
+                            <span class="counter-label">Seconds</span>
                         </span>`;
                 }
                 
@@ -166,7 +179,7 @@ class CounterJS {
             }
 
 
-            // Cálculo dos valores totais
+            // Calculate total values
             const totalSegundos = ss;
             const totalMinutos = Math.floor(totalSegundos / 60);
             const totalHoras = Math.floor(totalMinutos / 60);
@@ -174,18 +187,18 @@ class CounterJS {
             const totalMeses = Math.floor(totalDias / 30);
             const totalAnos = Math.floor(totalMeses / 12);
 
-            // Cálculo dos valores restantes
+            // Calculate remaining values
             const segundosRestantes = totalSegundos % 60;
             const minutosRestantes = totalMinutos % 60;
             const horasRestantes = totalHoras % 24;
             const diasRestantes = totalDias % 30;
             const mesesRestantes = totalMeses % 12;
 
-            // Cria o HTML do contador
+            // Create counter HTML
             let counterHTML = '<span class="counter-container">';
             let hasContent = false;
 
-            // Função auxiliar para adicionar separadores
+            // Helper function to add separators
             const addSeparator = (context = 'date') => {
                 if (!hasContent) return;
                 
@@ -233,7 +246,7 @@ class CounterJS {
             // Não precisamos mais adicionar o dateTimeSeparator aqui, pois ele é tratado na função addSeparator
 
 
-            // Adiciona separador entre data e hora se houver itens de data e tempo
+            // Add separator between date and time if both are present
             if (hasContent && (!counterData.hideHour || !counterData.hideMinute || !counterData.hideSecond)) {
                 addSeparator('datetime');
             }
