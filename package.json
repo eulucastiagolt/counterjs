@@ -1,6 +1,6 @@
 {
   "name": "counterjs",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A simple and customizable countdown timer",
   "main": "counter.js",
   "type": "module",
@@ -8,7 +8,7 @@
     "build": "terser counter.js -o counter.min.js --compress --mangle",
     "watch": "onchange 'counter.js' -- pnpm build",
     "prepublishOnly": "pnpm build",
-    "deploy": "gh-pages -d docs/dist -r https://github.com/eulucastiagolt/counterjs.git"
+    "dev": "live-server . --port=3000 --open=examples/example1"
   },
   "packageManager": "pnpm@8.15.4",
   "engines": {
@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "gh-pages": "^6.3.0",
+    "live-server": "^1.2.2",
     "onchange": "^7.1.0",
     "terser": "^5.19.2"
   }

@@ -1,6 +1,6 @@
 /**
  * CounterJS - A simple and customizable countdown timer
- * @version 3.0.1
+ * @version 3.0.2
  * @license MIT
  */
 class CounterJS {
@@ -42,9 +42,9 @@ class CounterJS {
             hideHour: counter.getAttribute('data-counterjs-hide-hour') === 'true',
             hideMinute: counter.getAttribute('data-counterjs-hide-minute') === 'true',
             hideSecond: counter.getAttribute('data-counterjs-hide-second') === 'true',
-            dateSeparator: counter.getAttribute('data-counterjs-date-separator') || ' ',
-            timeSeparator: counter.getAttribute('data-counterjs-time-separator') || ':',
-            dateTimeSeparator: counter.getAttribute('data-counterjs-datetime-separator') || ' ',
+            dateSeparator: counter.getAttribute('data-counterjs-date-separator') || '',
+            timeSeparator: counter.getAttribute('data-counterjs-time-separator') || '',
+            dateTimeSeparator: counter.getAttribute('data-counterjs-datetime-separator') || '',
             interval: null
         };
 
@@ -155,7 +155,9 @@ class CounterJS {
                 }
                 
                 if (!counterData.hideMinute) {
-                    if (hasContent) zeroHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
+                    if (hasContent && counterData.timeSeparator) {
+                        zeroHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
+                    }
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
@@ -165,7 +167,9 @@ class CounterJS {
                 }
                 
                 if (!counterData.hideSecond) {
-                    if (hasContent) zeroHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
+                    if (hasContent && counterData.timeSeparator) {
+                        zeroHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
+                    }
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
@@ -202,13 +206,13 @@ class CounterJS {
             const addSeparator = (context = 'date') => {
                 if (!hasContent) return;
                 
-                if (context === 'date') {
+                if (context === 'date' && counterData.dateSeparator) {
                     counterHTML += `<span class="counter-separator">${counterData.dateSeparator}</span>`;
                 } 
-                else if (context === 'time') {
+                else if (context === 'time' && counterData.timeSeparator) {
                     counterHTML += `<span class="counter-separator">${counterData.timeSeparator}</span>`;
                 }
-                else if (context === 'datetime') {
+                else if (context === 'datetime' && counterData.dateTimeSeparator) {
                     counterHTML += `<span class="counter-separator">${counterData.dateTimeSeparator}</span>`;
                 }
             };

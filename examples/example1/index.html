@@ -32,13 +32,28 @@
         </div>
     </div>
 
+    <div class="topbar">
+        <div class="topbar-content">
+            <h1>Offer ends in: </h1>
+            <div class="countdown"
+                 data-counterjs
+                 data-counterjs-date="31/12/2025 23:59:59">
+                Loading...
+            </div>
+            <a href="#offer" class="offer-button">
+                Claim Offer
+                <span class="offer-arrow">→</span>
+            </a>
+        </div>
+    </div>
+
     <div class="content">
         <h2>Page Content</h2>
         <p>This is an example page with a countdown timer in the top bar.</p>
     </div>
 
     <!-- Scripts no final do body para melhor performance -->
-    <script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
+    <script src="../../counter.js"></script>
     <script>
         // Initialize counter when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {

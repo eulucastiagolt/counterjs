@@ -24,6 +24,18 @@ body {
     padding: 8px 0;
 }
 
+.topbar:nth-child(2) {
+    background-color: #000;
+    color: #ffeb3b; /* Amarelo */
+    width: 100%;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    padding: 8px 0;
+}
+
 .topbar-content {
     max-width: 1200px;
     margin: 0 auto;
