@@ -1,21 +1,57 @@
 const counters = document.querySelectorAll('[data-counterjs]');
 
 counters.forEach(counter => {
-        const targetDateStr = counter.getAttribute('data-counterjs');
-        const hideWhenZero = counter.getAttribute('data-counterjs-hidden') === 'true';
-        const hideYear = counter.getAttribute('data-counterjs-hide-year') === 'true';
-        const hideMonth = counter.getAttribute('data-counterjs-hide-month') === 'true';
-        const hideDay = counter.getAttribute('data-counterjs-hide-day') === 'true';
-        const hideHour = counter.getAttribute('data-counterjs-hide-hour') === 'true';
-        const hideMinute = counter.getAttribute('data-counterjs-hide-minute') === 'true';
-        const hideSecond = counter.getAttribute('data-counterjs-hide-second') === 'true';
-        const dateSeparator = counter.getAttribute('data-counterjs-date-separator') || ' '; // Separador entre unidades de data
-        const timeSeparator = counter.getAttribute('data-counterjs-time-separator') || ' '; // Separador entre unidades de tempo
-        const dateTimeSeparator = counter.getAttribute('data-counterjs-datetime-separator') || ' '; // Separador entre data e hora
-        const [dateStr, timeStr] = targetDateStr.split(' ');
-        const [DD, MM, YY] = dateStr.split('/').map(Number);
-        const [HH, MI, SS] = timeStr.split(':').map(Number);
-        let interval;
+    const targetDateStr = counter.getAttribute('data-counterjs');
+    const hideWhenZero = counter.getAttribute('data-counterjs-hidden') === 'true';
+    const hideYear = counter.getAttribute('data-counterjs-hide-year') === 'true';
+    const hideMonth = counter.getAttribute('data-counterjs-hide-month') === 'true';
+    const hideDay = counter.getAttribute('data-counterjs-hide-day') === 'true';
+    const hideHour = counter.getAttribute('data-counterjs-hide-hour') === 'true';
+    const hideMinute = counter.getAttribute('data-counterjs-hide-minute') === 'true';
+    const hideSecond = counter.getAttribute('data-counterjs-hide-second') === 'true';
+    const dateSeparator = counter.getAttribute('data-counterjs-date-separator') || ' '; // Separador entre unidades de data
+    const timeSeparator = counter.getAttribute('data-counterjs-time-separator') || ' '; // Separador entre unidades de tempo
+    const dateTimeSeparator = counter.getAttribute('data-counterjs-datetime-separator') || ' '; // Separador entre data e hora
+    
+    let DD, MM, YY, HH = 0, MI = 0, SS = 0;
+    let interval;
+
+    try {
+        // Verifica se tem espaço para separar data e hora
+        const hasSpace = targetDateStr.includes(' ');
+        let dateStr = targetDateStr;
+        
+        if (hasSpace) {
+            // Se tiver espaço, separa data e hora
+            [dateStr, timeStr] = targetDateStr.split(' ');
+            // Se tiver tempo, processa
+            if (timeStr) {
+                [HH, MI, SS] = timeStr.split(':').map(Number);
+            }
+        } else if (targetDateStr.includes(':')) {
+            // Se não tem espaço mas tem :, assume que é apenas hora
+            [HH, MI, SS] = targetDateStr.split(':').map(Number);
+        }
+        
+        // Se tem barras, processa a data
+        if (dateStr.includes('/')) {
+            [DD, MM, YY] = dateStr.split('/').map(Number);
+        } else {
+            // Se não tem data, usa a data atual
+            const now = new Date();
+            DD = now.getDate();
+            MM = now.getMonth() + 1;
+            YY = now.getFullYear();
+        }
+        
+        // Garante que o ano tem 4 dígitos
+        if (YY < 100) YY += 2000;
+        
+    } catch (error) {
+        console.error('Erro ao processar data/hora:', error);
+        counter.textContent = 'Erro na data';
+        return;
+    }
 
         function updateCounter() {
             const current_time = new Date();
