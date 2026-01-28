@@ -19,7 +19,7 @@ A simple, lightweight and customizable countdown timer for your web projects.
 ### Via CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@4.0.0/counter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@4.1.0/counter.min.js"></script>
 ```
 
 
@@ -99,6 +99,12 @@ A simple, lightweight and customizable countdown timer for your web projects.
 | `data-counterjs-label-minutes` | Custom label for minutes | "Min" |
 | `data-counterjs-label-second` | Custom label for second | "Seg" |
 | `data-counterjs-label-seconds` | Custom label for seconds | "Seg" |
+| `data-counterjs-hide-label-year` | Hide year label (keeps number visible) | false |
+| `data-counterjs-hide-label-month` | Hide month label (keeps number visible) | false |
+| `data-counterjs-hide-label-day` | Hide day label (keeps number visible) | false |
+| `data-counterjs-hide-label-hour` | Hide hour label (keeps number visible) | false |
+| `data-counterjs-hide-label-minute` | Hide minute label (keeps number visible) | false |
+| `data-counterjs-hide-label-second` | Hide second label (keeps number visible) | false |
 
 ## Methods
 

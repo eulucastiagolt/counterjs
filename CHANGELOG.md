@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2025-01-28
+
+### Added
+- Hide label functionality for all time units
+- New data attributes to hide labels individually:
+  - `data-counterjs-hide-label-year` - Hide year label (keeps the number visible)
+  - `data-counterjs-hide-label-month` - Hide month label (keeps the number visible)
+  - `data-counterjs-hide-label-day` - Hide day label (keeps the number visible)
+  - `data-counterjs-hide-label-hour` - Hide hour label (keeps the number visible)
+  - `data-counterjs-hide-label-minute` - Hide minute label (keeps the number visible)
+  - `data-counterjs-hide-label-second` - Hide second label (keeps the number visible)
+
+### Features
+- Create minimalist counters showing only numbers without labels
+- Mix visible and hidden labels for custom designs
+- Maintains full backward compatibility
+
+### Usage Example
+```html
+<!-- Counter with only numbers, no labels -->
+<div data-counterjs
+     data-counterjs-date="31/12/2025 23:59:59"
+     data-counterjs-hide-label-year="true"
+     data-counterjs-hide-label-month="true"
+     data-counterjs-hide-label-day="true"
+     data-counterjs-hide-label-hour="true"
+     data-counterjs-hide-label-minute="true"
+     data-counterjs-hide-label-second="true">
+</div>
+```
+
 ## [4.0.0] - 2025-01-28
 
 ### Added
@@ -112,6 +143,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Initial commit
 - Basic project structure
 
+[4.1.0]: https://github.com/eulucastiagolt/counterjs/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/eulucastiagolt/counterjs/compare/v3.0.2...v4.0.0
 [3.0.2]: https://github.com/eulucastiagolt/counterjs/compare/v3.0.1...v3.0.2
 [3.0.1]: https://github.com/eulucastiagolt/counterjs/compare/v3.0.0...v3.0.1

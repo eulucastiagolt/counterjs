@@ -1,6 +1,7 @@
 /**
- * CounterJS - A simple and customizable countdown timer
- * @version 4.0.0
+ * CounterJS - A simple, lightweight and customizable countdown timer
+ * @version 4.1.0
+ * @author Lucas Tiago
  * @license MIT
  */
 class CounterJS {
@@ -42,6 +43,12 @@ class CounterJS {
             hideHour: counter.getAttribute('data-counterjs-hide-hour') === 'true',
             hideMinute: counter.getAttribute('data-counterjs-hide-minute') === 'true',
             hideSecond: counter.getAttribute('data-counterjs-hide-second') === 'true',
+            hideLabelYear: counter.getAttribute('data-counterjs-hide-label-year') === 'true',
+            hideLabelMonth: counter.getAttribute('data-counterjs-hide-label-month') === 'true',
+            hideLabelDay: counter.getAttribute('data-counterjs-hide-label-day') === 'true',
+            hideLabelHour: counter.getAttribute('data-counterjs-hide-label-hour') === 'true',
+            hideLabelMinute: counter.getAttribute('data-counterjs-hide-label-minute') === 'true',
+            hideLabelSecond: counter.getAttribute('data-counterjs-hide-label-second') === 'true',
             dateSeparator: counter.getAttribute('data-counterjs-date-separator') || '',
             timeSeparator: counter.getAttribute('data-counterjs-time-separator') || '',
             dateTimeSeparator: counter.getAttribute('data-counterjs-datetime-separator') || '',
@@ -124,7 +131,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">${counterData.labelYears}</span>
+                            ${!counterData.hideLabelYear ? `<span class="counter-label">${counterData.labelYears}</span>` : ''}
                         </span>`;
                     hasContent = true;
                 }
@@ -134,7 +141,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">${counterData.labelMonths}</span>
+                            ${!counterData.hideLabelMonth ? `<span class="counter-label">${counterData.labelMonths}</span>` : ''}
                         </span>`;
                     hasContent = true;
                 }
@@ -144,7 +151,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">${counterData.labelDays}</span>
+                            ${!counterData.hideLabelDay ? `<span class="counter-label">${counterData.labelDays}</span>` : ''}
                         </span>`;
                     hasContent = true;
                 }
@@ -161,7 +168,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">${counterData.labelHours}</span>
+                            ${!counterData.hideLabelHour ? `<span class="counter-label">${counterData.labelHours}</span>` : ''}
                         </span>`;
                     hasContent = true;
                 }
@@ -173,7 +180,7 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">${counterData.labelMinutes}</span>
+                            ${!counterData.hideLabelMinute ? `<span class="counter-label">${counterData.labelMinutes}</span>` : ''}
                         </span>`;
                     hasContent = true;
                 }
@@ -185,10 +192,10 @@ class CounterJS {
                     zeroHTML += `
                         <span class="counter-group">
                             <span class="counter-value">00</span>
-                            <span class="counter-label">${counterData.labelSeconds}</span>
+                            ${!counterData.hideLabelSecond ? `<span class="counter-label">${counterData.labelSeconds}</span>` : ''}
                         </span>`;
                 }
-                
+
                 zeroHTML += '</span>';
                 counter.innerHTML = zeroHTML;
                 return;
@@ -234,7 +241,7 @@ class CounterJS {
                 counterHTML += `
                     <span class="counter-group">
                         <span class="counter-value">${totalAnos.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${totalAnos === 1 ? counterData.labelYear : counterData.labelYears}</span>
+                        ${!counterData.hideLabelYear ? `<span class="counter-label">${totalAnos === 1 ? counterData.labelYear : counterData.labelYears}</span>` : ''}
                     </span>`;
                 hasContent = true;
             }
@@ -244,7 +251,7 @@ class CounterJS {
                 counterHTML += `
                     <span class="counter-group">
                         <span class="counter-value">${mesesRestantes.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${mesesRestantes === 1 ? counterData.labelMonth : counterData.labelMonths}</span>
+                        ${!counterData.hideLabelMonth ? `<span class="counter-label">${mesesRestantes === 1 ? counterData.labelMonth : counterData.labelMonths}</span>` : ''}
                     </span>`;
                 hasContent = true;
             }
@@ -254,7 +261,7 @@ class CounterJS {
                 counterHTML += `
                     <span class="counter-group">
                         <span class="counter-value">${diasRestantes.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${diasRestantes === 1 ? counterData.labelDay : counterData.labelDays}</span>
+                        ${!counterData.hideLabelDay ? `<span class="counter-label">${diasRestantes === 1 ? counterData.labelDay : counterData.labelDays}</span>` : ''}
                     </span>`;
                 hasContent = true;
             }
@@ -272,7 +279,7 @@ class CounterJS {
                 counterHTML += `
                     <span class="counter-group">
                         <span class="counter-value">${horasRestantes.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${horasRestantes === 1 ? counterData.labelHour : counterData.labelHours}</span>
+                        ${!counterData.hideLabelHour ? `<span class="counter-label">${horasRestantes === 1 ? counterData.labelHour : counterData.labelHours}</span>` : ''}
                     </span>`;
                 hasContent = true;
             }
@@ -282,7 +289,7 @@ class CounterJS {
                 counterHTML += `
                     <span class="counter-group">
                         <span class="counter-value">${minutosRestantes.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${minutosRestantes === 1 ? counterData.labelMinute : counterData.labelMinutes}</span>
+                        ${!counterData.hideLabelMinute ? `<span class="counter-label">${minutosRestantes === 1 ? counterData.labelMinute : counterData.labelMinutes}</span>` : ''}
                     </span>`;
                 hasContent = true;
             }
@@ -292,7 +299,7 @@ class CounterJS {
                 counterHTML += `
                     <span class="counter-group">
                         <span class="counter-value">${segundosRestantes.toString().padStart(2, '0')}</span>
-                        <span class="counter-label">${segundosRestantes === 1 ? counterData.labelSecond : counterData.labelSeconds}</span>
+                        ${!counterData.hideLabelSecond ? `<span class="counter-label">${segundosRestantes === 1 ? counterData.labelSecond : counterData.labelSeconds}</span>` : ''}
                     </span>`;
             }
 
