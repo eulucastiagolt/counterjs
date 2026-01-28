@@ -19,7 +19,7 @@ A simple, lightweight and customizable countdown timer for your web projects.
 ### Via CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@3.0.1/counter.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/eulucastiagolt/counterjs@4.0.0/counter.min.js"></script>
 ```
 
 
@@ -43,7 +43,7 @@ A simple, lightweight and customizable countdown timer for your web projects.
 ### Advanced Usage
 
 ```html
-<div 
+<div
   data-counterjs
   data-counterjs-date="31/12/2025 23:59:59"
   data-counterjs-hide-year="false"
@@ -55,6 +55,18 @@ A simple, lightweight and customizable countdown timer for your web projects.
   data-counterjs-date-separator=" / "
   data-counterjs-time-separator=" : "
   data-counterjs-datetime-separator=" - "
+  data-counterjs-label-year="A"
+  data-counterjs-label-years="A"
+  data-counterjs-label-month="M"
+  data-counterjs-label-months="M"
+  data-counterjs-label-day="D"
+  data-counterjs-label-days="D"
+  data-counterjs-label-hour="H"
+  data-counterjs-label-hours="H"
+  data-counterjs-label-minute="Min"
+  data-counterjs-label-minutes="Min"
+  data-counterjs-label-second="Seg"
+  data-counterjs-label-seconds="Seg"
 >
   Loading...
 </div>
@@ -75,6 +87,18 @@ A simple, lightweight and customizable countdown timer for your web projects.
 | `data-counterjs-date-separator` | Separator between date elements | " / " |
 | `data-counterjs-time-separator` | Separator between time elements | " : " |
 | `data-counterjs-datetime-separator` | Separator between date and time | " - " |
+| `data-counterjs-label-year` | Custom label for year (singular) | "Ano" |
+| `data-counterjs-label-years` | Custom label for years (plural) | "Anos" |
+| `data-counterjs-label-month` | Custom label for month (singular) | "Mês" |
+| `data-counterjs-label-months` | Custom label for months (plural) | "Meses" |
+| `data-counterjs-label-day` | Custom label for day (singular) | "Dia" |
+| `data-counterjs-label-days` | Custom label for days (plural) | "Dias" |
+| `data-counterjs-label-hour` | Custom label for hour (singular) | "Hora" |
+| `data-counterjs-label-hours` | Custom label for hours (plural) | "Horas" |
+| `data-counterjs-label-minute` | Custom label for minute | "Min" |
+| `data-counterjs-label-minutes` | Custom label for minutes | "Min" |
+| `data-counterjs-label-second` | Custom label for second | "Seg" |
+| `data-counterjs-label-seconds` | Custom label for seconds | "Seg" |
 
 ## Methods
 

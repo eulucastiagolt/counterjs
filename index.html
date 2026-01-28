@@ -6,35 +6,72 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <!-- Exemplo 1: Contador com separadores padrão (espaço) -->
-    <div data-counterjs="21/05/2025 12:00:00"
-    data-counterjs-hide-hour="true"
-         data-counterjs-hide-minute="true"
-         data-counterjs-hide-second="true"
-    ></div>
-    
-    <!-- Exemplo 2: Contador com separadores personalizados -->
-    <div data-counterjs="31/05/2026 12:30:45"
-         data-counterjs-date-separator=" / "
-         data-counterjs-time-separator=":"
-         data-counterjs-datetime-separator=" - ">
+    <h1>Exemplos de CounterJS</h1>
+
+    <h2>Exemplo 1: Contador padrão</h2>
+    <div 
+        data-counterjs
+        data-counterjs-date="21/05/2025 12:00:00"
+        data-counterjs-hide-hour="true"
+        data-counterjs-hide-minute="true"
+        data-counterjs-hide-second="true"
+    >
     </div>
-    
-    <!-- Exemplo 3: Apenas data com separador personalizado -->
-    <div data-counterjs="31/12/2025 23:59:59"
-         data-counterjs-date-separator=" - "
-         data-counterjs-hide-hour="true"
-         data-counterjs-hide-minute="true"
-         data-counterjs-hide-second="true">
+
+    <h2>Exemplo 2: Contador com separadores personalizados</h2>
+    <div 
+        data-counterjs
+        data-counterjs-date="31/05/2026 12:30:45"
+        data-counterjs-date-separator=" / "
+        data-counterjs-time-separator=":"
+        data-counterjs-datetime-separator=" - "
+    >
     </div>
-    
-    <!-- Exemplo 4: Apenas hora com separador personalizado -->
-    <div data-counterjs="21/05/2025 12:30:00"
-         data-counterjs-time-separator=":"
-         data-counterjs-hide-year="true"
-         data-counterjs-hide-month="true"
-         data-counterjs-hide-day="true">
+
+    <h2>Exemplo 3: Labels customizados (abreviados)</h2>
+    <div 
+        data-counterjs
+        data-counterjs-date="31/12/2025 23:59:59"
+        data-counterjs-label-year="A"
+        data-counterjs-label-years="A"
+        data-counterjs-label-month="M"
+        data-counterjs-label-months="M"
+        data-counterjs-label-day="D"
+        data-counterjs-label-days="D"
+        data-counterjs-label-hour="H"
+        data-counterjs-label-hours="H"
+        data-counterjs-label-minute="Min"
+        data-counterjs-label-minutes="Min"
+        data-counterjs-label-second="S"
+        data-counterjs-label-seconds="S"
+    >
     </div>
+
+    <h2>Exemplo 4: Labels em inglês</h2>
+    <div 
+        data-counterjs
+        data-counterjs-date="21/05/2025 12:30:00"
+        data-counterjs-label-year="Year"
+        data-counterjs-label-years="Years"
+        data-counterjs-label-month="Month"
+        data-counterjs-label-months="Months"
+        data-counterjs-label-day="Day"
+        data-counterjs-label-days="Days"
+        data-counterjs-label-hour="Hour"
+        data-counterjs-label-hours="Hours"
+        data-counterjs-label-minute="Minute"
+        data-counterjs-label-minutes="Minutes"
+        data-counterjs-label-second="Second"
+        data-counterjs-label-seconds="Seconds"
+    >
+    </div>
+
     <script src="counter.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const counter = new CounterJS();
+        counter.init();
+      });
+    </script>
   </body>
 </html>

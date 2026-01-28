@@ -1,6 +1,6 @@
 {
   "name": "counterjs",
-  "version": "3.0.2",
+  "version": "4.0.0",
   "description": "A simple and customizable countdown timer",
   "main": "counter.js",
   "type": "module",
